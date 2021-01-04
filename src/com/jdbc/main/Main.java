@@ -1,5 +1,7 @@
 package com.jdbc.main;
 
+import java.util.List;
+
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -36,10 +38,15 @@ public class Main {
 		//another way to call the batch insert is through the auto setup method we created
 		BatchGenerator batch = context.getBean(BatchGenerator.class);
 		batch.setupStudentTable();
-		
-		
 		executor.deleteRecord(3);
 		
+		
+		
+		/*
+		 * Retrieve records
+		 */
+		List<Student> studentList = executor.retrieveAllRecords();
+		batch.printStudentList(studentList);
 	
 	}
 

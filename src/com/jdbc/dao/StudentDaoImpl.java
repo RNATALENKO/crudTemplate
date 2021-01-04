@@ -11,7 +11,7 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.stereotype.Repository;
 
 import com.jdbc.pojo.Student;
-
+import com.jdbc.rowmappers.StudentRowMapper;
 
 import jdk.jfr.consumer.RecordedStackTrace;
 
@@ -112,7 +112,54 @@ public class StudentDaoImpl implements StudentDao {
 	}
 
 
+	@Override
+	public List<Student> retrieveAllRecords() {
+		
+		//sql string to query for all records
+		String selectSQL = "SELECT * FROM school.student";
+		
+		
+		//use .query() to execute a retrieval with a rowmapper
+		List<Student> studentList = jdbcTemplate.query(selectSQL, new StudentRowMapper());
+		
+		
+		return studentList;
+	}
+
+
+	@Override
+	public Student retrieveRecord(int rollNo) {
+		
+		String singleSelectedSQL = "SELECT * FROM school.student WHERE ROLL_NUM =?";
+		
+		Student student = jdbcTemplate.query
+		
+		
+		return null;
+	}
+
+
 	
+	
+	/*
+	 * 
+	 * retrieve operations
+	 * when retrieving a record, we will convert the record information into a Student object
+	 * 
+	 * Mapper class fetches records and makes data available one by one
+	 * ResultSet is a class that contains all the records from the SQL query
+	 */
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+
 	
 	
 	

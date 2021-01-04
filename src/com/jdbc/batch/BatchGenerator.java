@@ -2,6 +2,9 @@ package com.jdbc.batch;
 
 import com.jdbc.dao.StudentDaoImpl;
 import com.jdbc.pojo.Student;
+
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
+
 import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +53,14 @@ public class BatchGenerator {
 	public void setupStudentTable() {
 		
 		studentDaoImpl.batchInsert(createBatch());
+	}
+	
+	public void printStudentList(List<Student> studentList) {
+		
+		for(Student tempStudent : studentList) {
+			System.out.println(tempStudent);
+		}
+		
 	}
 
 }

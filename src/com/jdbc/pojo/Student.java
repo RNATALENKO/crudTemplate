@@ -1,5 +1,8 @@
 package com.jdbc.pojo;
 
+import org.springframework.stereotype.Component;
+
+
 public class Student {
 	
 	private int rollNo;
@@ -24,4 +27,12 @@ public class Student {
 	public void setAddress(String address) {
 		this.address = address;
 	}
+	
+	@Override
+	public String toString() {
+		return "Student [rollNo=" + rollNo + ", name=" + name + ", address=" + address + "]";
+	}
+	
+	
+	
 }

@@ -28,6 +28,11 @@ public interface StudentDao {
 	
 	
 	
+	/*
+	 * read methods
+	 */
+	List<Student> retrieveAllRecords();
+	Student retrieveRecord();
 	
 
 }
