@@ -6,6 +6,7 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.stereotype.Repository;
@@ -23,6 +24,13 @@ import jdk.jfr.consumer.RecordedStackTrace;
  * update() method used for DML sql commands
  * execute() method used for DDL sql commands
  * 
+ * query() to retrieve list of objects/records
+ * queryForObject to retrieve single object/record
+ * 
+ *  * BeanPropertyRowMapper() injects into pojo only if column name is the same as the pojo's property name, 
+ * otherwise you get mapped class not specified, but, you can also use alias column names to rename them to pojo's name
+ * String singleSelectedSQL = "SELECT ROLL_NUM as rollNo, STUDENT_NAME as name, STUDENT_ADDRESS as address FROM school.student WHERE ROLL_NUM =?";
+ * Student student = jdbcTemplate.queryForObject(singleSelectedSQL, new BeanPropertyRowMapper<Student>(Student.class), rollNo);
  */
 
 @Repository("dao")
@@ -110,6 +118,17 @@ public class StudentDaoImpl implements StudentDao {
 		System.out.println("table records cleaned");
 		
 	}
+	
+	
+	/*
+	 * 
+	 * retrieve operations
+	 * when retrieving a record, we will convert the record information into a Student object
+	 * 
+	 * Mapper class fetches records and makes data available one by one
+	 * ResultSet is a class that contains all the records from the SQL query
+	 */
+	
 
 
 	@Override
@@ -121,34 +140,28 @@ public class StudentDaoImpl implements StudentDao {
 		
 		//use .query() to execute a retrieval with a rowmapper
 		List<Student> studentList = jdbcTemplate.query(selectSQL, new StudentRowMapper());
-		
-		
 		return studentList;
 	}
+
 
 
 	@Override
 	public Student retrieveRecord(int rollNo) {
 		
-		String singleSelectedSQL = "SELECT * FROM school.student WHERE ROLL_NUM =?";
+		String singleSelectedSQL = "SELECT * WHERE ROLL_NUM =?";
 		
-		Student student = jdbcTemplate.query
+		//use query for object to retrieve a single object, attach argument to ? mark as the third argument
+		//(sql, rowmapper, arguments)
+		Student student = jdbcTemplate.queryForObject(singleSelectedSQL, new StudentRowMapper(), rollNo);
 		
+	
 		
-		return null;
+		return student;
 	}
 
 
 	
 	
-	/*
-	 * 
-	 * retrieve operations
-	 * when retrieving a record, we will convert the record information into a Student object
-	 * 
-	 * Mapper class fetches records and makes data available one by one
-	 * ResultSet is a class that contains all the records from the SQL query
-	 */
 	
 	
 	

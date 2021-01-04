@@ -60,7 +60,10 @@ public class BatchGenerator {
 		for(Student tempStudent : studentList) {
 			System.out.println(tempStudent);
 		}
-		
+	}
+	
+	public void printStudentObject(Student student) {
+		System.out.println(student);
 	}
 
 }

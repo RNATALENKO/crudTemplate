@@ -30,23 +30,27 @@ public class Main {
 		studentOne.setAddress("1234 162nd lane");
 		
 		//retrieve dao implementation and execute updates
-		StudentDaoImpl executor = context.getBean("dao", StudentDaoImpl.class);
-		executor.insert(studentOne);
-		executor.deleteByNameOrAddress("Bob", "Seattle");
-		executor.deleteAll();
+		StudentDaoImpl studentDaoImpl = context.getBean("dao", StudentDaoImpl.class);
+		studentDaoImpl.insert(studentOne);
+		studentDaoImpl.deleteByNameOrAddress("Bob", "Seattle");
+		studentDaoImpl.deleteAll();
 		//executor.batchInsert(BatchGenerator.createBatch());
 		//another way to call the batch insert is through the auto setup method we created
 		BatchGenerator batch = context.getBean(BatchGenerator.class);
 		batch.setupStudentTable();
-		executor.deleteRecord(3);
+		studentDaoImpl.deleteRecord(3);
 		
 		
 		
 		/*
 		 * Retrieve records
 		 */
-		List<Student> studentList = executor.retrieveAllRecords();
+		List<Student> studentList = studentDaoImpl.retrieveAllRecords();
 		batch.printStudentList(studentList);
+		
+		Student student = studentDaoImpl.retrieveRecord(1);
+		batch.printStudentObject(student);
+		
 	
 	}
 

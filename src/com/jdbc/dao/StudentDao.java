@@ -32,7 +32,7 @@ public interface StudentDao {
 	 * read methods
 	 */
 	List<Student> retrieveAllRecords();
-	Student retrieveRecord();
+	Student retrieveRecord(int rollNo);
 	
 
 }
