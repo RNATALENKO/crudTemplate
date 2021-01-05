@@ -31,13 +31,18 @@ public class StudentBatchPreparedSatementSetter implements BatchPreparedStatemen
 		//first question mark is parameter index 1 which is address
 		ps.setString(1, studentList.get(i).getAddress()); //sets first parameter as the index of the List<Student> that you pass in, so if you pass in 0, that will be student1 object
 		ps.setInt(2, studentList.get(i).getRollNo());
+		
+		System.out.println("setting prepared statement values...in batch prepared statement setter");
 	}
 
-	//defines how many times query will execute, or how many times setValues() method will execute
+	//defines how many times setValues() method will execute i.e. how many times the query will execute
 	@Override
 	public int getBatchSize() {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		System.out.println("getting batch size...in batch prepared statement setter");
+		
+		//run it as many records there are in the list
+		return studentList.size();
 	}
 
 }

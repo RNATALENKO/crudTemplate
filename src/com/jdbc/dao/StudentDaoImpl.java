@@ -11,6 +11,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.stereotype.Repository;
 
+import com.jdbc.batchpreparedstatement.StudentBatchPreparedSatementSetter;
 import com.jdbc.pojo.Student;
 import com.jdbc.resultsetextractor.StudentResultSetExtractor;
 import com.jdbc.rowmappers.StudentRowMapper;
@@ -216,8 +217,9 @@ public class StudentDaoImpl implements StudentDao {
 		
 		//another way to do this is to use batch prepared statement setter
 		
+		int[] updateNum = jdbcTemplate.batchUpdate(updateSQL, new StudentBatchPreparedSatementSetter(studentList));
 		
-		
+		return updateNum.length;
 		
 		
 	}
