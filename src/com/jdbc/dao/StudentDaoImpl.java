@@ -12,6 +12,7 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.stereotype.Repository;
 
 import com.jdbc.pojo.Student;
+import com.jdbc.resultsetextractor.StudentResultSetExtractor;
 import com.jdbc.rowmappers.StudentRowMapper;
 
 import jdk.jfr.consumer.RecordedStackTrace;
@@ -148,15 +149,77 @@ public class StudentDaoImpl implements StudentDao {
 	@Override
 	public Student retrieveRecord(int rollNo) {
 		
-		String singleSelectedSQL = "SELECT * WHERE ROLL_NUM =?";
+		String singleSelectedSQL = "SELECT * FROM school.student WHERE ROLL_NUM =?";
 		
 		//use query for object to retrieve a single object, attach argument to ? mark as the third argument
 		//(sql, rowmapper, arguments)
 		Student student = jdbcTemplate.queryForObject(singleSelectedSQL, new StudentRowMapper(), rollNo);
 		
-	
-		
 		return student;
+	}
+
+
+	//returns a list of student names, using result set extractor instead of row mapper
+	//if you mention <Student> it will return Student
+	@Override
+	public List<Student> findStudentsByName(String name) {
+		
+		String selectSQL = "SELECT * FROM school.student WHERE STUDENT_NAME =?";
+		
+		
+		List<Student> studentList = jdbcTemplate.query(selectSQL, new StudentResultSetExtractor(), name);
+		
+		return studentList;
+	}
+
+
+	@Override
+	public int updateStudent(Student student) {
+		
+		String updateSQL = "UPDATE school.student SET STUDENT_ADDRESS=? WHERE ROLL_NUM =? ";
+		
+		//don't forget can wrap args in Object[] array = {student.getaddress() etc.. also
+		int recordsUpdated = jdbcTemplate.update(updateSQL, student.getAddress(), student.getRollNo());
+		
+		return recordsUpdated;
+	}
+
+
+	@Override
+	public int updateBatch(List<Student> studentList) {
+		
+		//this is technically the prepared statement, it gets compiled and returned as PreparedStatement object
+		String updateSQL = "UPDATE school.student SET STUDENT_ADDRESS=? WHERE ROLL_NUM =? ";
+		
+		/*
+		//convert student list data into List<Object[]>
+		List<Object[]> batchArgs = new ArrayList<>();
+		
+		//iterate through student objects
+		for(Student tempStudent : studentList) {
+			
+			//retrieve data from object, store into array
+			//address comes first in argument since it's the first ? within the string
+			Object[] studentArray = {tempStudent.getAddress(),tempStudent.getRollNo()};
+			
+			//add array into list
+			batchArgs.add(studentArray);
+			
+		}
+		
+	
+		int[] updateNum = jdbcTemplate.batchUpdate(updateSQL, batchArgs);
+		
+		
+		return updateNum.length;
+		*/
+		
+		//another way to do this is to use batch prepared statement setter
+		
+		
+		
+		
+		
 	}
 
 

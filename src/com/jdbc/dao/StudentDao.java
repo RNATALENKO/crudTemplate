@@ -33,6 +33,17 @@ public interface StudentDao {
 	 */
 	List<Student> retrieveAllRecords();
 	Student retrieveRecord(int rollNo);
+	List<Student> findStudentsByName(String name);
+	
+	
+	
+	/*
+	 * update records
+	 * 
+	 */
+	int updateStudent(Student student); //returns number of rows updated
+	int updateBatch(List<Student> studentList);
+	
 	
 
 }

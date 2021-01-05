@@ -15,6 +15,7 @@ public class StudentRowMapper implements RowMapper<Student> {
 	//so for first record (rowNum= 0), the result set will contain 1 Bob Seattle
 	
 	//this method gets called multiple times based on how many records databse contains
+	//the result set only contains one record at a time, unlike the resultsetextractor which contains all data result set
 	
 	@Override
 	public Student mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -35,6 +36,8 @@ public class StudentRowMapper implements RowMapper<Student> {
 		System.out.println(studentObject.getRollNo());
 		System.out.println(studentObject.getName());
 		System.out.println(studentObject.getAddress());
+		
+		System.out.println("inside mapRow() of rowmapper");
 		
 		//return the student object
 		return studentObject;

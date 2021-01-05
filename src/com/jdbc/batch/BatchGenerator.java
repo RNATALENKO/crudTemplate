@@ -25,6 +25,10 @@ public class BatchGenerator {
 		Student studentOne = new Student();
 		Student studentTwo = new Student();
 		Student studentThree = new Student();
+		Student studentFour = new Student();
+		Student studentFive = new Student();
+		Student studentSix = new Student();
+		Student studentSeven = new Student();
 	
 		
 		//set the data
@@ -37,12 +41,28 @@ public class BatchGenerator {
 		studentThree.setRollNo(3);
 		studentThree.setName("Susan");
 		studentThree.setAddress("Renton");
+		studentFour.setRollNo(4);
+		studentFour.setName("Bob");
+		studentFour.setAddress("Renton");
+		studentFive.setRollNo(5);
+		studentFive.setName("Susan");
+		studentFive.setAddress("Bellevue");
+		studentSix.setRollNo(6);
+		studentSix.setName("Rod");
+		studentSix.setAddress("Renton");
+		studentSeven.setRollNo(7);
+		studentSeven.setName("Bob");
+		studentSeven.setAddress("Bellevue");
 		
 		
 		//add them to a list
 		batchList.add(studentOne);
 		batchList.add(studentTwo);
 		batchList.add(studentThree);
+		batchList.add(studentFour);
+		batchList.add(studentFive);
+		batchList.add(studentSix);
+		batchList.add(studentSeven);
 		
 		//return a list
 		return batchList;
