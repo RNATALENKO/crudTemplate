@@ -14,9 +14,10 @@ import com.jdbc.pojo.Student;
 
 public class StudentBatchPreparedSatementSetter implements BatchPreparedStatementSetter {
 	
-	
+	//will be contstructor injected
 	List<Student> studentList; 
 	
+	//constructor that receives studentlist 
 	public StudentBatchPreparedSatementSetter(List<Student> studentList) {
 		this.studentList = studentList; 
 	}
@@ -46,3 +47,6 @@ public class StudentBatchPreparedSatementSetter implements BatchPreparedStatemen
 	}
 
 }
+
+
+

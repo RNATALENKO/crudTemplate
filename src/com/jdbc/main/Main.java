@@ -1,5 +1,7 @@
 package com.jdbc.main;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.asyncDispatch;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +12,7 @@ import com.jdbc.batch.BatchGenerator;
 import com.jdbc.dao.StudentDao;
 import com.jdbc.dao.StudentDaoImpl;
 import com.jdbc.pojo.Student;
+
 
 /*
  * 
@@ -87,8 +90,8 @@ public class Main {
 		updateStudent.setRollNo(4); //we want to update the student whose roll number is 4
 		updateStudent.setAddress("India");//changing address to india
 		
-		int updateNum = studentDaoImpl.updateStudent(updateStudent);
-		System.out.println("Number of records updated: " + updateNum);
+		//int updateNum = studentDaoImpl.updateStudent(updateStudent);
+		//System.out.println("Number of records updated: " + updateNum);
 		
 		
 		/*
@@ -100,22 +103,27 @@ public class Main {
 		Student student1 = new Student();
 		List<Student> updateList = new ArrayList<Student>();
 		student1.setRollNo(1);
-		student1.setAddress("Denver");
+		student1.setAddress("Denver TransHandling");
 		
 		Student student2= new Student();
 		student2.setRollNo(4);
-		student2.setAddress("U-district");
+		student2.setAddress("U-district TransHandling saddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd");
 		
 		Student student3 = new Student();
 		student3.setRollNo(6);
-		student3.setAddress("Hawaii");
+		student3.setAddress("Hawaii TransHandling");
 		
 		updateList.add(student1);
 		updateList.add(student2);
 		updateList.add(student3);
 		
+	
+	
 		int batchNumUpdate = studentDaoImpl.updateBatch(updateList);
 		System.out.println("number of records updated in batch: " + batchNumUpdate);
+	
+		
+		
 		
 	}
 

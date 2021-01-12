@@ -10,6 +10,7 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.jdbc.batchpreparedstatement.StudentBatchPreparedSatementSetter;
 import com.jdbc.pojo.Student;
@@ -33,6 +34,22 @@ import jdk.jfr.consumer.RecordedStackTrace;
  * otherwise you get mapped class not specified, but, you can also use alias column names to rename them to pojo's name
  * String singleSelectedSQL = "SELECT ROLL_NUM as rollNo, STUDENT_NAME as name, STUDENT_ADDRESS as address FROM school.student WHERE ROLL_NUM =?";
  * Student student = jdbcTemplate.queryForObject(singleSelectedSQL, new BeanPropertyRowMapper<Student>(Student.class), rollNo);
+ */
+
+
+/*
+ * 
+ * notes on transactions: 
+ * let's say you perform a batch update, if there's 500 records, and one goes wrong, how do you manage that transaction? 
+ * https://www.youtube.com/watch?v=oJK_egOYA4s&t=1754s 30 mins
+ * Without transaction management, if one record fails then the rest still update
+ * however, we want, if one record fails all fail, and if all succeed all update.
+ * 
+ * add @Transactional over the dao method, each sql query will be wrapped in a transaction and if one fails, it reverts
+ * you can also put it ontop of the class which affects all of the methods
+ * 
+ * Note: you need to activate transactional bean in beans.xml, add the dtd in namespaces tab, tick tx, for transaction
+ * 
  */
 
 @Repository("dao")
@@ -187,6 +204,7 @@ public class StudentDaoImpl implements StudentDao {
 
 
 	@Override
+	@Transactional   //specifies if one record fails to update, none update, or if all succeed all are updated, see beans for config details
 	public int updateBatch(List<Student> studentList) {
 		
 		//this is technically the prepared statement, it gets compiled and returned as PreparedStatement object
@@ -216,9 +234,11 @@ public class StudentDaoImpl implements StudentDao {
 		*/
 		
 		//another way to do this is to use batch prepared statement setter
-		
+		//returns an array of integers which hold 1 or 0, if a record successfully updated
 		int[] updateNum = jdbcTemplate.batchUpdate(updateSQL, new StudentBatchPreparedSatementSetter(studentList));
 		
+		
+
 		return updateNum.length;
 		
 		
@@ -258,3 +278,5 @@ public class StudentDaoImpl implements StudentDao {
 	*/
 
 }
+
+
